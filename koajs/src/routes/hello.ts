@@ -1,24 +1,18 @@
-import Router from 'koa-router'
-import {auth, checkBody, UserContext} from '~/routes/_middleware'
+import {MiddlewareRouter} from '~/routes/_middleware'
 import {z} from 'zod'
 
-const router = new Router<any, UserContext>()
-
-router.use(auth())
-
 const schema = z.object({
-  ASD: z.string(),
+  bodyName: z.string(),
 })
 
-router.get('/', async ctx => {
-  const name = ctx.user.firstName
+const router = MiddlewareRouter().auth().body(schema)
+
+router.post('/', async ctx => {
+  const firstName = ctx.user.firstName
+  const bodyName = ctx.json.bodyName
   ctx.body = {
-    message: `Hello, ${name}!`,
+    message: `Hello, ${firstName} ${bodyName}!`,
   }
 })
-
-router.post('/', checkBody(schema), async ctx => {
-    ctx.body = ctx.user
-  })
 
 export default router

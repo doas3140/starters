@@ -1,8 +1,7 @@
-import Router from 'koa-router'
-import {z} from 'zod'
 import {ENV} from '~/env'
+import {MiddlewareRouter} from './_middleware'
 
-const router = new Router()
+const router = MiddlewareRouter()
 
 router.get('/version', async ctx => {
   ctx.body = ENV.VERSION

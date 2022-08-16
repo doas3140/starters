@@ -1,4 +1,4 @@
-import {DefaultContext, DefaultState, Middleware} from 'koa'
+import {DefaultState, Middleware} from 'koa'
 
 import {z} from 'zod'
 import {rs} from '../../utils'
