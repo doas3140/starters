@@ -1,0 +1,12 @@
+src/.ipynb_checkpoints
+src/src.egg-info
+src/nbs/__pycache__
+src/server/__pycache__
+src/server/routers/__pycache__
+data/unzipped
+
+src/*/**/__pycache__
+
+bloom
+docs
+environment.yml

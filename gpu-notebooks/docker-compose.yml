@@ -1,0 +1,51 @@
+version: "3.4"
+services:
+  notebook:
+    container_name: ${PROJECT}_nbs
+    build:
+      context: .
+      target: nbs_base
+    command: bash -c "cd /data/src && pip install -e . && jupyter notebook --allow-root --no-browser --ip=0.0.0.0 --port=8080 --NotebookApp.token='' --NotebookApp.password=''"
+    ports:
+      - "8010:8080"
+    volumes:
+      - .:/data/
+      - ../data:/root-data/
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    # [GPU:enable] [CPU:disable]
+    # deploy:
+    #   resources:
+    #     reservations:
+    #       devices:
+    #         - capabilities: [gpu]
+
+  server:
+    container_name: ${PROJECT}_nbs-server
+    build:
+      context: .
+      target: nbs_base
+    command: |
+      bash -c "cd /data/src && pip install -e . && uvicorn server.main:app --host 0.0.0.0 --port 80 --reload"
+    ports:
+      - "8006:80"
+    volumes:
+      - .:/data/
+      - ../data:/root-data/
+
+  # superres-server-prod:
+  #   container_name: ${PROJECT}_nbs-server-prod
+  #   build:
+  #     context: .
+  #     target: nbs_prod
+  #   ports:
+  #     - "8007:80"
+  #   #deploy:
+  #   #  resources:
+  #   #    reservations:
+  #   #      devices:
+  #   #        - capabilities: [gpu]
+
+networks:
+  equiferus_main:
+    external: true
