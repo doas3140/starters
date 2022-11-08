@@ -37,11 +37,9 @@ dependencies:
   - entrypoints=0.3=py39h06a4308_0
   - execnb=0.1.4=py_0
   - expat=2.4.1=h2531618_2
-  - fastcore=1.5.27=py_0
   - fontconfig=2.13.1=h6c09931_0
   - fonttools=4.25.0=pyhd3eb1b0_0
   - freetype=2.10.4=h5ab3b9f_0
-  - giflib=5.2.1=h7b6447c_0
   - glib=2.69.1=h5202010_0
   - gst-plugins-base=1.14.0=h8213a91_2
   - gstreamer=1.14.0=h28cd5cc_2
@@ -76,7 +74,6 @@ dependencies:
   - libstdcxx-ng=9.3.0=hd4cf53a_17
   - libtiff=4.2.0=h85742a9_0
   - libuuid=1.0.3=h1bed415_2
-  - libwebp=1.2.0=h89dd481_0
   - libwebp-base=1.2.0=h27cfd23_0
   - libxcb=1.14=h7b6447c_0
   - libxml2=2.9.12=h03d6c58_0
@@ -173,9 +170,9 @@ dependencies:
     - cymem==2.0.7
     - fastai==2.7.10
     - fastapi==0.68.1
+    - fastcore==1.5.27
     - fastdownload==0.0.7
     - fastprogress==1.0.3
-    - ghapi==1.0.3
     - h11==0.12.0
     - httpcore==0.13.7
     - httpx==0.19.0
