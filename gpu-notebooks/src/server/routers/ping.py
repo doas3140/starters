@@ -5,6 +5,11 @@ from nbs.server_functions import FastApi, Ping
 
 router = APIRouter()
 
+VERSION = open('../VERSION','r').read()
+@router.get("/version")
+async def version():
+    return VERSION
+
 @router.get("/ping")
 async def ping():
     return Ping.ping()

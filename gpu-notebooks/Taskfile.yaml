@@ -1,0 +1,54 @@
+version: '3'
+
+dotenv: ['.env']
+
+vars:
+  env: dev # context of k8s
+  ROOT: zw # must match the dir of k8s/zw
+  IMAGE: gpu-notebooks-todo # should match the one in k8s/zw/docker-compose.yml
+  K8_NAMESPACE: "{{.ROOT}}-{{.env}}"
+  REGISTRY_PORT: 5000 # maps from this port in registry pod to our machine localhost:REGISTRY_PORT 
+  REGISTRY: "localhost:{{.REGISTRY_PORT}}"
+  TAG: "{{.env}}" # the end tag that the image is pushed to
+  VERSION:
+    sh: cat "VERSION"
+    # sh: date +%Y_%m_%d_%H_%M # use this if there is no version number
+
+tasks:
+  version:
+    cmds:
+      - echo {{.VERSION}}
+  dev:
+    cmds:
+      - docker-compose up --build
+  logs:
+    cmds:
+      - docker logs {{.PROJECT}}_nbs-server -f
+  ssh:
+    cmds:
+      - docker exec -it {{.PROJECT}}_nbs bash
+
+  # k8 commands
+
+  k8-pf:
+    cmds:
+      - kubectl config use-context {{.env}}
+      - kubectl -n registry port-forward svc/registry-svc {{.REGISTRY_PORT}}
+  
+  k8-push:
+    cmds:
+      - task: build-image
+      - docker tag {{.ROOT}}_{{.IMAGE}} {{.REGISTRY}}/{{.ROOT}}_{{.IMAGE}}:{{.VERSION}}
+      - docker push {{.REGISTRY}}/{{.ROOT}}_{{.IMAGE}}:{{.VERSION}}
+      - docker tag {{.REGISTRY}}/{{.ROOT}}_{{.IMAGE}}:{{.VERSION}} {{.REGISTRY}}/{{.ROOT}}_{{.IMAGE}}:{{.TAG}}
+      - docker push {{.REGISTRY}}/{{.ROOT}}_{{.IMAGE}}:{{.TAG}}
+
+  k8-roll:
+    cmds:
+      - kubectl config use-context {{.env}}
+      - kubectl -n {{.K8_NAMESPACE}} scale --replicas=0 deployment/{{.K8_NAMESPACE}}-{{.IMAGE}}
+      - kubectl -n {{.K8_NAMESPACE}} scale --replicas=1 deployment/{{.K8_NAMESPACE}}-{{.IMAGE}}
+
+  build-image:
+    cmds:
+      - docker-compose -f ./k8s/zw/docker-compose.yml build

@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  gpu-notebooks-todo:
+    container_name: zw_gpu-notebooks-todo
+    build:
+      context: ../..
+      target: nbs_prod
+    # network_mode: host
+    # environment:
+    # - TEST=TEST
+    # ports:
+    #   - '3000:3000'
