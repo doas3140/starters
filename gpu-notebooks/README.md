@@ -13,7 +13,7 @@ docker-compose up --build
 ```bash
 source .env; docker exec -it ${PROJECT}_nbs bash
 conda install nbdev
-conda env export -n base > /data/environment.gpu.yml
+conda env export -n base > /repo/environment.min.yml
 docker-compose up --build
 ```
 

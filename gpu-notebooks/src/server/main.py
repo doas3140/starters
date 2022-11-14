@@ -2,7 +2,7 @@ from typing import Optional
 from fastapi import FastAPI
 from nbs.core import config
 
-from .routers import ping
+from .routers import ping, ping_fastai
 
 print('settings:', config)
 
@@ -18,3 +18,4 @@ app.add_middleware(
 )
 
 app.include_router(ping.router)
+app.include_router(ping_fastai.router)

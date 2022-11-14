@@ -4,13 +4,13 @@ services:
     container_name: ${PROJECT}_nbs
     build:
       context: .
+      dockerfile: Dockerfile.cpu
       target: nbs_base
-    command: bash -c "cd /repo/src && pip install -e . && jupyter notebook --allow-root --no-browser --ip=0.0.0.0 --port=8080 --NotebookApp.token='' --NotebookApp.password=''"
+    command: bash -c "cd /app/src && pip install -e . && jupyter notebook --allow-root --no-browser --ip=0.0.0.0 --port=8080 --NotebookApp.token='' --NotebookApp.password=''"
     ports:
       - "8010:8080"
     volumes:
-      - .:/repo/
-      - ./data:/data/
+      - .:/app/
     extra_hosts:
       - "host.docker.internal:host-gateway"
     # [GPU:enable] [CPU:disable]
@@ -24,13 +24,16 @@ services:
     container_name: ${PROJECT}_nbs-server
     build:
       context: .
+      dockerfile: Dockerfile.min
       target: nbs_base
     command: |
-      bash -c "cd /repo/src && pip install -e . && uvicorn server.main:app --host 0.0.0.0 --port 3000 --reload"
+      bash -c "cd /app/src && pip install -e . && uvicorn server.main:app --host 0.0.0.0 --port 3000 --reload"
     ports:
       - "8006:3000"
     volumes:
-      - .:/repo/
+      - .:/app/
+      # - ./data:/app/data
+      # - ./models:/app/models
 
 # networks:
 #   equiferus_main:

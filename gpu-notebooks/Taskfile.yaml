@@ -26,7 +26,7 @@ tasks:
       - docker logs {{.PROJECT}}_nbs-server -f
   ssh:
     cmds:
-      - docker exec -it {{.PROJECT}}_nbs bash
+      - docker exec -it {{.PROJECT}}_nbs-server bash
 
   # k8 commands
 

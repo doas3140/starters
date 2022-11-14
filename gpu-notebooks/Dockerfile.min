@@ -1,0 +1,23 @@
+FROM continuumio/miniconda3 AS nbs_base 
+
+WORKDIR /app
+
+# OpenCV
+RUN apt-get update && apt-get install libgl1-mesa-glx -y
+
+COPY environment.min.yml .
+RUN conda env update --file environment.min.yml --prune
+
+# ENTRYPOINT ["tail","-f","/dev/null"]
+
+FROM nbs_base AS nbs_prod
+
+WORKDIR /app
+
+COPY ./models/. /app/
+COPY . .
+
+WORKDIR /app/src
+
+EXPOSE 3000
+CMD ["uvicorn", "server.main:app", "--host", "0.0.0.0", "--port", "3000"]
