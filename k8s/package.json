@@ -1,0 +1,21 @@
+{
+    "name": "k8s",
+    "main": "index.ts",
+    "scripts": {
+        "test": "jest",
+        "test:watch": "jest --watch"
+    },
+    "devDependencies": {
+        "@types/node": "^14"
+    },
+    "dependencies": {
+        "@jest/globals": "^29.3.1",
+        "@pulumi/kubernetes": "^3.0.0",
+        "@pulumi/kubernetesx": "^0.1.5",
+        "@pulumi/pulumi": "^3.0.0",
+        "inversify": "^6.0.1",
+        "jest": "^29.3.1",
+        "reflect-metadata": "^0.1.13",
+        "ts-jest": "^29.0.3"
+    }
+}

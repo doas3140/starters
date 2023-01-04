@@ -1,0 +1,50 @@
+version: '3'
+
+# dotenv: ['.env']
+
+# vars:
+#   K8_CONFIG_NAME: "example-dev"
+#   REPO_PATH: ~/_git/starters/k8s
+#   DEV_PATH: "{{.REPO_PATH}}/.pulumi-dev/"
+#   PROD_PATH: "{{.REPO_PATH}}/.pulumi-prod/"
+#   CURRENT_PATH: "{{.DEV_PATH}}"
+
+vars:
+  K8_CONFIG_NAME: "dev"
+  REPO_PATH: ~/_git/starters/k8s
+  DEV_PATH: "{{.REPO_PATH}}/.pulumi-dev/"
+  PROD_PATH: "{{.REPO_PATH}}/.pulumi-prod/"
+  CURRENT_PATH: "{{.DEV_PATH}}"
+
+tasks:
+  setup:
+    desc: Install & Setup Everything
+    cmds:
+      - npm install
+      - mkdir -p {{.DEV_PATH}}
+      - mkdir -p {{.PROD_PATH}}
+      - task: login
+
+  login:
+    cmds:
+      - pulumi login file://{{.CURRENT_PATH}}
+      - export PULUMI_CONFIG_PASSPHRASE=
+
+  up:
+    desc: Upload New Configuration
+    cmds:
+      - task: login
+      - kubectl config use-context {{.K8_CONFIG_NAME}}
+      - export PULUMI_CONFIG_PASSPHRASE=
+      - pulumi stack select || exit 1
+      - pulumi up
+
+  test:
+    desc: Runs All Tests
+    cmds:
+      - npm run test
+
+  "test:watch":
+    desc: Runs All Tests in Watch Mode
+    cmds:
+      - npm run test:watch
