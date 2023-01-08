@@ -1,0 +1,6 @@
+version: '3'
+tasks:
+  dev:
+    desc: runs storybook
+    cmds:
+      - pnpm run dev

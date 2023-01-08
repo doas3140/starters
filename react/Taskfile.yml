@@ -1,0 +1,33 @@
+version: '3'
+tasks:
+  setup:
+    desc: setups all projects to be ready for use
+    cmds:
+      - pnpm install
+
+  install-package:
+    desc: pnpm add <package> --filter <workspace>
+
+  lint:
+    desc: runs eslint and tsc
+    cmds:
+      - npm run tsc
+      - npm run lint
+    env:
+      TIMING: 1 # for turbo repo eslint
+
+  format:
+    desc: format all code w/ prettier & run linting on it
+    cmds:
+      - npm run format
+      - task: lint
+
+  test:
+    desc: runs all unit tests
+    cmds:
+      - npm run test
+
+  'web:dev':
+    dir: apps/web
+    cmds: 
+      - npm run dev

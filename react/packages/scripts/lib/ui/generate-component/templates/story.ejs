@@ -1,0 +1,29 @@
+import React from 'react'
+import {Story, Meta} from '@storybook/react'
+import StoryWrapper from '../../wrapper'
+
+import * as Atom from 'ui/atoms'
+
+
+const StoryComponent = <%= type %>.<%= component %>
+type StoryProps = <%= type %>.<%= component %>Props
+
+export default {
+  title: `<%= type.toLowerCase() + 's' %>/core/${StoryComponent.name.split(/(?=[A-Z])/).join(' ')}`,
+  component: StoryComponent,
+} as Meta
+
+const Template: Story<typeof StoryComponent> = (args: any) => (
+  <StoryWrapper>
+    <StoryComponent {...args} />
+  </StoryWrapper>
+)
+
+// CHANGE EXAMPLE BELOW
+let args: StoryProps
+
+export const <%= component %> = Template.bind({})
+args = {
+  ...<%= type %>.<%= component %>DefaultProps,
+}
+<%= component %>.args = {...args}

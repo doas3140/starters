@@ -1,0 +1,28 @@
+version: '3'
+tasks:
+  
+  dev:
+    cmds:
+      - npm run dev
+  
+  install-package:
+    desc: pnpm add <package>
+
+  lint:
+    desc: runs eslint and tsc
+    cmds:
+      - npm run tsc
+      - npm run lint
+    env:
+      TIMING: 1 # for turbo repo eslint
+
+  format:
+    desc: format code w/ prettier & run linting on it
+    cmds:
+      - npm run format
+      - task: lint
+
+  test:
+    desc: runs unit tests
+    cmds:
+      - npm run test

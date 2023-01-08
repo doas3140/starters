@@ -1,0 +1,7 @@
+version: '3'
+
+tasks:
+  generate-component:
+    desc: generate tsx component
+    cmds:
+      - npm run ts-node lib/ui/generate-component/index.ts

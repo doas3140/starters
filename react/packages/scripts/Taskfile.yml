@@ -1,0 +1,22 @@
+version: '3'
+
+includes:
+  ui:
+    taskfile: Taskfile.ui.yml
+
+tasks:
+  hello:
+    desc: prints hello
+    cmds:
+      - npm run ts-node lib/hello.ts
+
+  lint:
+    desc: runs eslint and tsc
+    cmds:
+      - npm run tsc
+
+  format:
+    desc: format code w/ prettier & run linting on it
+    cmds:
+      - npm run format
+      - task: lint
