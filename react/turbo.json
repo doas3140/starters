@@ -5,7 +5,7 @@
       "outputs": [".next/**"]
     },
     "lint": {
-      "outputs": []
+      "cache": false
     },
     "dev": {
       "cache": false
