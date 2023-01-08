@@ -40,8 +40,8 @@ tasks:
   lint:
     desc: runs eslint and tsc
     cmds:
-      # - npm run tsc
       - npm run lint
+      - npm run tsc
 
   format:
     desc: format all code w/ prettier & run linting on it

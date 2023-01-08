@@ -12,7 +12,7 @@ export const exampleRouter = createTRPCRouter({
     }),
 
   addExample: publicProcedure
-    .mutation(async ({ input, ctx }) => {
+    .mutation(async ({ ctx }) => {
       const example = await ctx.prisma.example.create({ data: {} });
       return example.id;
     }),

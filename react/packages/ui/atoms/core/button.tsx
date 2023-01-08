@@ -2,7 +2,7 @@ import styles from './button.module.css'
 import * as React from 'react'
 import {Button as AButton} from 'antd'
 
-type ButtonProps = {
+export type ButtonProps = {
   name: string
   onClick?: () => void
 }

@@ -66,7 +66,7 @@ const Home: NextPage = () => {
           </div>
         </div>
         {examples.map((example) => (
-          <div className="text-white"> {example.id} </div>
+          <div key={example.id} className="text-white"> {example.id} </div>
         ))}
       </main>
     </>
