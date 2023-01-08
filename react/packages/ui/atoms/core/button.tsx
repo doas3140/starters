@@ -2,8 +2,9 @@ import styles from './button.module.css'
 import * as React from 'react'
 import {Button as AButton} from 'antd'
 
-export type ButtonProps = {
+type ButtonProps = {
   name: string
+  onClick?: () => void
 }
 
 export const ButtonDefaultProps: ButtonProps = {
@@ -11,5 +12,5 @@ export const ButtonDefaultProps: ButtonProps = {
 }
 
 export const Button = (props: ButtonProps = ButtonDefaultProps) => {
-  return <AButton className={styles.button}>{props.name}</AButton>
+  return <AButton onClick={props.onClick} className={styles.button}>{props.name}</AButton>
 }

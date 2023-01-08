@@ -1,7 +1,7 @@
 module.exports = {
-  extends: ['next/core-web-vitals', 'next', 'turbo', 'prettier'],
-  rules: {
-    '@next/next/no-html-link-for-pages': 'off',
-    'react/jsx-key': 'off',
-  },
+  "plugins": ["@typescript-eslint"],
+  "extends": ["next/core-web-vitals", "plugin:@typescript-eslint/recommended"],
+  "rules": {
+    "@typescript-eslint/consistent-type-imports": "warn"
+  }
 }

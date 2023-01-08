@@ -1,0 +1,50 @@
+version: '3'
+tasks:
+  "dev:run":
+    cmds:
+      - npm run dev
+
+  "dev:db:run":
+    cmds:
+      - docker-compose -f ./docker/docker-compose.postgres.yml --env-file ./.env.dev up -d
+
+  "dev:db:update":
+    cmds:
+      - npm run dev:prisma db push dev --schema ./prisma/schema.prisma
+      - npm run dev:prisma generate --schema ./prisma/schema.prisma
+
+  "dev:db:clean":
+    cmds:
+      - docker-compose -f ./docker/docker-compose.postgres.yml down
+      - sudo rm -rf ./docker/_data/postgres
+
+  "dev:db:generate_migration":
+    cmds:
+      - npm run dev:prisma migrate dev --schema ./prisma/schema.prisma
+
+
+  "prod:run":
+    cmds:
+      - docker-compose -f ./docker/docker-compose.prod.yml up --build
+
+  "prod:db:sync_migrations":
+    cmds:
+      - prisma migrate deploy --schema prisma/schema.prisma
+
+  "prod:update":
+    cmds:
+      - task: "prod:db:sync_migrations"
+      - task: "prod:run"
+
+
+  lint:
+    desc: runs eslint and tsc
+    cmds:
+      # - npm run tsc
+      - npm run lint
+
+  format:
+    desc: format all code w/ prettier & run linting on it
+    cmds:
+      - npm run format
+      - task: lint
